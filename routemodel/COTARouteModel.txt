@@ -1,0 +1,35 @@
+import math
+inf = math.inf
+
+# Map measurements
+map_radii = [inf, 10.11, inf, 77.2, inf, 34.94, inf, 13.06, inf, 29.65, 60.63, inf, 20.03, inf, inf, inf, 30.61, inf,
+             10.29, inf, 16.08, inf, inf, 9.19, inf, inf, inf, inf, inf, 7.46, inf, 23.04, inf, 18.27, 79.68, inf, 17.71,
+             inf, 19.44, 75.33, inf, 23.01, inf, 8.59, inf]
+map_distances = [0, 341.17, 367.05, 447.07, 524.27, 619.47, 637.44, 677.21, 690.27, 722.27, 758.83, 881.14, 922.06,
+                 937.42, 957.09, 986.06, 996.37, 1057.94, 1065.81, 1078.85, 1176.89, 1187.19, 1363.72, 1390.42, 1413,
+                 1511.23, 1611.3, 1721.83, 1813.58, 2041.89, 2057.85, 2159.64, 2182.68, 2210.96, 2234.44, 2296.6,
+                 2317.08, 2334.79, 2431.37, 2442.38, 2628.19, 2719.97, 2751.12, 2889.81, 2907.57]
+
+#Scale the radii properly
+def scale(map_measurement, map_scale):
+    scaled_measurement = []
+    for i in range(len(map_measurement)):
+        scaled_measurement.append(map_measurement[i]*map_scale)
+    return scaled_measurement
+
+# Find the speed limits of each turn
+def turn_speeds(turn_radii):
+    v = []
+    # Maximum allowed acceleration for a turn
+    a = 9.8
+    # For each turn radius, calculate the speed that will result in max acceleration
+    for i in range(len(turn_radii)):
+        v.append((a*turn_radii[i])**0.5)
+    return v
+
+cota_distances = scale(map_distances, 200/108.91)
+cota_turnspeeds = turn_speeds(scale(map_radii, 200/108.91))
+
+# For troubleshooting:
+# print(cota_distances)
+# print(cota_turnspeeds)
